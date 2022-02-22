@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>eu.europa.ec.fisheries.uvms.exchange</groupId>
+        <groupId>fish.focus.uvms.exchange</groupId>
         <artifactId>exchange</artifactId>
         <version>5.3.23-UVMS-SNAPSHOT</version>
     </parent>
@@ -46,11 +46,15 @@
 
         <!-- Uvms libs -->
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms</groupId>
+            <groupId>fish.focus.uvms.lib</groupId>
             <artifactId>uvms-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+            <groupId>fish.focus.uvms.lib</groupId>
+            <artifactId>usm4uvms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fish.focus.uvms.commons</groupId>
             <artifactId>uvms-commons-message</artifactId>
         </dependency>
 
@@ -61,11 +65,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.user</groupId>
+            <groupId>fish.focus.uvms.user</groupId>
             <artifactId>user-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
+            <groupId>fish.focus.uvms.audit</groupId>
             <artifactId>audit-model</artifactId>
         </dependency>
         <dependency>
@@ -138,63 +142,6 @@
                             <username>${username}</username>
                             <password>${password}</password>
                             <force>true</force>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!-- USE following command to run this profile: mvn clean install -P generate-rest-doc -Dhostname=127.0.0.1 -Dport=8080  -->
-        <profile>
-            <id>generate-rest-doc</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>generate-service-docs</id>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
-                                    <docletArtifact>
-                                        <groupId>com.carma</groupId>
-                                        <artifactId>swagger-doclet</artifactId>
-                                        <version>1.1.2</version>
-                                        <additionalparam>-apiVersion ${project.version}
-                                            -docBasePath /${project.parent.artifactId}/apidocs
-                                            -apiBasePath /${project.parent.artifactId}/rest
-                                        </additionalparam>
-                                    </docletArtifact>
-                                    <reportOutputDirectory>src/main/webapp</reportOutputDirectory>
-                                    <useStandardDocletOptions>false</useStandardDocletOptions>
-                                </configuration>
-                                <goals>
-                                    <goal>javadoc</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.google.code.maven-replacer-plugin</groupId>
-                        <artifactId>replacer</artifactId>
-                        <version>1.5.3</version>
-                        <executions>
-                            <execution>
-                                <phase>prepare-package</phase>
-                                <goals>
-                                    <goal>replace</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <file>${basedir}/src/main/webapp/apidocs/index.html</file>
-                            <replacements>
-                                <replacement>
-                                    <token>new ApiKeyAuthorization\("api_key", key, "query"\)</token>
-                                    <value>new ApiKeyAuthorization("Authorization", key, "header")</value>
-                                </replacement>
-                            </replacements>
                         </configuration>
                     </plugin>
                 </plugins>
