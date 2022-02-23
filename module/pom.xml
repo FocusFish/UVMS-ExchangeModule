@@ -22,7 +22,7 @@
         <!-- Project modules-->
 
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.asset</groupId>
+            <groupId>fish.focus.uvms.asset</groupId>
             <artifactId>asset-client</artifactId>
             <version>${asset.version}</version>
         </dependency>
@@ -81,7 +81,7 @@
             <artifactId>movement-rules-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.asset</groupId>
+            <groupId>fish.focus.uvms.asset</groupId>
             <artifactId>asset-model</artifactId>
         </dependency>
         <dependency>

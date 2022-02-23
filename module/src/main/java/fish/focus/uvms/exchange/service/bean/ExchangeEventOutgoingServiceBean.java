@@ -38,7 +38,7 @@ import fish.focus.schema.exchange.v1.LogType;
 import fish.focus.schema.exchange.v1.TypeRefType;
 import fish.focus.uvms.commons.message.api.MessageConstants;
 import eu.europa.ec.fisheries.uvms.longpolling.notifications.NotificationMessage;
-import eu.europa.ec.fisheries.wsdl.asset.types.Asset;
+import fish.focus.wsdl.asset.types.Asset;
 import fish.focus.wsdl.user.types.Organisation;
 import fish.focus.uvms.exchange.model.mapper.ExchangePluginRequestMapper;
 import fish.focus.uvms.exchange.model.mapper.JAXBMarshaller;

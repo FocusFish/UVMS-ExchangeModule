@@ -13,15 +13,15 @@ package fish.focus.uvms.exchange.service.bean;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import eu.europa.ec.fisheries.uvms.asset.client.AssetClient;
-import eu.europa.ec.fisheries.uvms.asset.client.model.AssetDTO;
-import eu.europa.ec.fisheries.uvms.asset.client.model.AssetIdentifier;
-import eu.europa.ec.fisheries.wsdl.asset.types.AssetId;
+import fish.focus.uvms.asset.client.AssetClient;
+import fish.focus.uvms.asset.client.model.AssetDTO;
+import fish.focus.uvms.asset.client.model.AssetIdentifier;
+import fish.focus.wsdl.asset.types.AssetId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.europa.ec.fisheries.wsdl.asset.types.Asset;
-import eu.europa.ec.fisheries.wsdl.asset.types.AssetIdType;
+import fish.focus.wsdl.asset.types.Asset;
+import fish.focus.wsdl.asset.types.AssetIdType;
 
 @Stateless
 public class ExchangeAssetServiceBean {

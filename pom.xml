@@ -35,7 +35,7 @@
         <uvms-pom-deps.version>3.16</uvms-pom-deps.version>
 
         <!-- Uvms models -->
-        <asset.version>6.8.22</asset.version>
+        <asset.version>6.8.23</asset.version>
         <user.model.version>2.2.3</user.model.version>
         <audit.model.version>4.3.11</audit.model.version>
         <movement.model.version>5.6.8-UVMS</movement.model.version>
@@ -135,7 +135,7 @@
                 <version>${movement.rules.model.version}</version>
             </dependency>
             <dependency>
-                <groupId>eu.europa.ec.fisheries.uvms.asset</groupId>
+                <groupId>fish.focus.uvms.asset</groupId>
                 <artifactId>asset-model</artifactId>
                 <version>${asset.version}</version>
             </dependency>
