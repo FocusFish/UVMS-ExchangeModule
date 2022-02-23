@@ -5,14 +5,14 @@
     <persistence-unit name="exchange" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>jdbc/uvms_exchange</jta-data-source>
-        <class>eu.europa.ec.fisheries.uvms.config.service.entity.Parameter</class>
-        <class>eu.europa.ec.fisheries.uvms.exchange.service.entity.serviceregistry.ServiceSetting</class>
-        <class>eu.europa.ec.fisheries.uvms.exchange.service.entity.serviceregistry.ServiceCapability</class>
-        <class>eu.europa.ec.fisheries.uvms.exchange.service.entity.serviceregistry.Service</class>
-        <class>eu.europa.ec.fisheries.uvms.exchange.service.entity.exchangelog.ExchangeLog</class>
-        <class>eu.europa.ec.fisheries.uvms.exchange.service.entity.exchangelog.ExchangeLogStatus</class>
-        <class>eu.europa.ec.fisheries.uvms.exchange.service.entity.unsent.UnsentMessage</class>
-        <class>eu.europa.ec.fisheries.uvms.exchange.service.entity.unsent.UnsentMessageProperty</class>
+        <class>fish.focus.uvms.config.service.entity.Parameter</class>
+        <class>fish.focus.uvms.exchange.service.entity.serviceregistry.ServiceSetting</class>
+        <class>fish.focus.uvms.exchange.service.entity.serviceregistry.ServiceCapability</class>
+        <class>fish.focus.uvms.exchange.service.entity.serviceregistry.Service</class>
+        <class>fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLog</class>
+        <class>fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLogStatus</class>
+        <class>fish.focus.uvms.exchange.service.entity.unsent.UnsentMessage</class>
+        <class>fish.focus.uvms.exchange.service.entity.unsent.UnsentMessageProperty</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>ALL</shared-cache-mode>
         <properties>

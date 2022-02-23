@@ -2,9 +2,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>eu.europa.ec.fisheries.uvms.exchange</groupId>
+        <groupId>fish.focus.uvms.exchange</groupId>
         <artifactId>exchange</artifactId>
-        <version>5.3.23-UVMS-SNAPSHOT</version>
+        <version>5.3.23</version>
     </parent>
 
     <artifactId>liquibase</artifactId>
@@ -35,54 +35,6 @@
 		            <version>${driver.version}</version>
 		        </dependency>
 		    </dependencies>
-        </profile>
-		<profile>
-            <id>oracle</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-				  <db.url>jdbc:oracle:thin:@localhost:1521:db04t01</db.url>
-				  <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
-				  <db.user>uvms_exchange</db.user>
-				  <db.passwd>uvms_exchange</db.passwd>
-                <db.changeLogFile>changelog/db-changelog-master.xml</db.changeLogFile>
-                <driver.groupId>com.oracle</driver.groupId>
-                <driver.artifactId>ojdbc7</driver.artifactId>
-                <driver.version>12.1.0.2.0</driver.version>
-            </properties>
-            <dependencies>
-		        <dependency>
-		            <groupId>${driver.groupId}</groupId>
-		            <artifactId>${driver.artifactId}</artifactId>
-		            <version>${driver.version}</version>
-		        </dependency>
-		    </dependencies>            
-        </profile>
-        <profile>
-            <id>release</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <repository.id>${project.distributionManagement.repository.id}</repository.id>
-                <repository.url>${project.distributionManagement.repository.url}</repository.url>
-            </properties>
-        </profile>
-        <profile>
-            <id>belgium-local</id>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>lv-snapshots</id>
-                    <url>https://apjenp01.dg3.be/nexus/repository/maven-snapshots/</url>
-                </snapshotRepository>
-            </distributionManagement>
-            <properties>
-                <db.url>jdbc:postgresql://apunid01/uvms</db.url>
-                <db.user>exchange</db.user>
-                <db.passwd>exchange</db.passwd>
-                <db.defaultSchema>exchange</db.defaultSchema>
-            </properties>
         </profile>
         <profile>
 			<id>publish-sql</id>

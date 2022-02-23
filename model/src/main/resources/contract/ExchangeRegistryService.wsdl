@@ -1,17 +1,17 @@
 <definitions name="ExchangeModuleService"
-             targetNamespace="urn:registry.exchange.schema.fisheries.ec.europa.eu:v1"
-             xmlns:registry="urn:registry.exchange.schema.fisheries.ec.europa.eu:v1"
-             xmlns:common="urn:common.exchange.schema.fisheries.ec.europa.eu:v1"
-             xmlns:service="urn:service.exchange.schema.fisheries.ec.europa.eu:v1"
+             targetNamespace="urn:registry.exchange.schema.focus.fish:v1"
+             xmlns:registry="urn:registry.exchange.schema.focus.fish:v1"
+             xmlns:common="urn:common.exchange.schema.focus.fish:v1"
+             xmlns:service="urn:service.exchange.schema.focus.fish:v1"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns="http://schemas.xmlsoap.org/wsdl/">
 
     <types>
-        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"  targetNamespace="urn:registry.exchange.schema.fisheries.ec.europa.eu:v1">
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"  targetNamespace="urn:registry.exchange.schema.focus.fish:v1">
             
-            <xsd:import namespace="urn:common.exchange.schema.fisheries.ec.europa.eu:v1" schemaLocation="ExchangeCommon.xsd"/>
-            <xsd:import namespace="urn:service.exchange.schema.fisheries.ec.europa.eu:v1" schemaLocation="Service.xsd"/>
+            <xsd:import namespace="urn:common.exchange.schema.focus.fish:v1" schemaLocation="ExchangeCommon.xsd"/>
+            <xsd:import namespace="urn:service.exchange.schema.focus.fish:v1" schemaLocation="Service.xsd"/>
             
             <xsd:simpleType name="ExchangeRegistryMethod">
                 <xsd:restriction base="xsd:string">

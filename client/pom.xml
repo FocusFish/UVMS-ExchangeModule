@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>exchange</artifactId>
-        <groupId>eu.europa.ec.fisheries.uvms.exchange</groupId>
-        <version>5.3.23-UVMS-SNAPSHOT</version>
+        <groupId>fish.focus.uvms.exchange</groupId>
+        <version>5.3.23</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -25,16 +25,16 @@
         </dependency>
 
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+            <groupId>fish.focus.uvms.commons</groupId>
             <artifactId>uvms-commons-date</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms</groupId>
+            <groupId>fish.focus.uvms.lib</groupId>
             <artifactId>usm4uvms</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+                    <groupId>fish.focus.uvms.commons</groupId>
                     <artifactId>uvms-commons-message</artifactId>
                 </exclusion>
             </exclusions>

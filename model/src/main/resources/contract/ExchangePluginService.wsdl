@@ -1,20 +1,20 @@
 <definitions name="ExchangeModuleService"
-             targetNamespace="urn:plugin.exchange.schema.fisheries.ec.europa.eu:v1"
-             xmlns:plugin="urn:plugin.exchange.schema.fisheries.ec.europa.eu:v1"
-             xmlns:service="urn:service.exchange.schema.fisheries.ec.europa.eu:v1"
-             xmlns:types="urn:types.plugin.exchange.schema.fisheries.ec.europa.eu:v1"
-             xmlns:common="urn:common.exchange.schema.fisheries.ec.europa.eu:v1"
+             targetNamespace="urn:plugin.exchange.schema.focus.fish:v1"
+             xmlns:plugin="urn:plugin.exchange.schema.focus.fish:v1"
+             xmlns:service="urn:service.exchange.schema.focus.fish:v1"
+             xmlns:types="urn:types.plugin.exchange.schema.focus.fishu:v1"
+             xmlns:common="urn:common.exchange.schema.focus.fish:v1"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns="http://schemas.xmlsoap.org/wsdl/">
 
     <types>
-        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"  targetNamespace="urn:plugin.exchange.schema.fisheries.ec.europa.eu:v1">
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"  targetNamespace="urn:plugin.exchange.schema.focus.fish:v1">
             
-            <xsd:import namespace="urn:common.exchange.schema.fisheries.ec.europa.eu:v1" schemaLocation="ExchangeCommon.xsd"/>
-            <xsd:import namespace="urn:exchange.schema.fisheries.ec.europa.eu:v1" schemaLocation="Exchange.xsd"/>
-            <xsd:import namespace="urn:service.exchange.schema.fisheries.ec.europa.eu:v1" schemaLocation="Service.xsd"/>
-            <xsd:import namespace="urn:types.plugin.exchange.schema.fisheries.ec.europa.eu:v1" schemaLocation="Plugin.xsd"/>
+            <xsd:import namespace="urn:common.exchange.schema.focus.fish:v1" schemaLocation="ExchangeCommon.xsd"/>
+            <xsd:import namespace="urn:exchange.schema.focus.fish:v1" schemaLocation="Exchange.xsd"/>
+            <xsd:import namespace="urn:service.exchange.schema.focus.fish:v1" schemaLocation="Service.xsd"/>
+            <xsd:import namespace="urn:types.plugin.exchange.schema.focus.fish:v1" schemaLocation="Plugin.xsd"/>
             
             <xsd:simpleType name="ExchangePluginMethod">
                 <xsd:restriction base="xsd:string">

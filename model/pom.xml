@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>eu.europa.ec.fisheries.uvms.exchange</groupId>
+        <groupId>fish.focus.uvms.exchange</groupId>
         <artifactId>exchange</artifactId>
-        <version>5.3.23-UVMS-SNAPSHOT</version>
+        <version>5.3.23</version>
     </parent>
 
     <artifactId>exchange-model</artifactId>
@@ -26,7 +26,7 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+            <groupId>fish.focus.uvms.commons</groupId>
             <artifactId>uvms-commons-date</artifactId>
         </dependency>
         <dependency>
