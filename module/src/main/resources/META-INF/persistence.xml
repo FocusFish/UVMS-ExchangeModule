@@ -5,7 +5,7 @@
     <persistence-unit name="exchange" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>jdbc/uvms_exchange</jta-data-source>
-        <class>eu.europa.ec.fisheries.uvms.config.service.entity.Parameter</class>
+        <class>fish.focus.uvms.config.service.entity.Parameter</class>
         <class>fish.focus.uvms.exchange.service.entity.serviceregistry.ServiceSetting</class>
         <class>fish.focus.uvms.exchange.service.entity.serviceregistry.ServiceCapability</class>
         <class>fish.focus.uvms.exchange.service.entity.serviceregistry.Service</class>
