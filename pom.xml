@@ -38,9 +38,9 @@
         <asset.version>6.8.23</asset.version>
         <user.model.version>2.2.3</user.model.version>
         <audit.model.version>4.3.11</audit.model.version>
-        <movement.model.version>5.6.8-UVMS</movement.model.version>
-        <movement.rules.model.version>2.4.14</movement.rules.model.version>
-        <activity.model.version>1.0.11-SWE</activity.model.version>
+        <movement.model.version>5.6.9</movement.model.version>
+        <movement.rules.model.version>2.4.15</movement.rules.model.version>
+        <activity.model.version>1.2.15</activity.model.version>
     </properties>
 
     <dependencyManagement>
@@ -125,12 +125,12 @@
                 <version>${audit.model.version}</version>
             </dependency>
             <dependency>
-                <groupId>eu.europa.ec.fisheries.uvms.movement</groupId>
+                <groupId>fish.focus.uvms.movement</groupId>
                 <artifactId>movement-model</artifactId>
                 <version>${movement.model.version}</version>
             </dependency>
             <dependency>
-                <groupId>eu.europa.ec.fisheries.uvms.movement-rules</groupId>
+                <groupId>fish.focus.uvms.movement-rules</groupId>
                 <artifactId>movement-rules-model</artifactId>
                 <version>${movement.rules.model.version}</version>
             </dependency>
@@ -140,31 +140,9 @@
                 <version>${asset.version}</version>
             </dependency>
             <dependency>
-                <groupId>eu.europa.ec.fisheries.uvms.activity</groupId>
+                <groupId>fish.focus.uvms.activity</groupId>
                 <artifactId>activity-model</artifactId>
                 <version>${activity.model.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.sun.xml.bind</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.mapstruct</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>ch.qos.logback</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>fish.focus.uvms.maven</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>

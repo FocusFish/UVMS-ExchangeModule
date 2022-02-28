@@ -73,11 +73,11 @@
             <artifactId>audit-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.movement</groupId>
+            <groupId>fish.focus.uvms.movement</groupId>
             <artifactId>movement-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.movement-rules</groupId>
+            <groupId>fish.focus.uvms.movement-rules</groupId>
             <artifactId>movement-rules-model</artifactId>
         </dependency>
         <dependency>
@@ -85,7 +85,7 @@
             <artifactId>asset-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.activity</groupId>
+            <groupId>fish.focus.uvms.activity</groupId>
             <artifactId>activity-model</artifactId>
         </dependency>
 

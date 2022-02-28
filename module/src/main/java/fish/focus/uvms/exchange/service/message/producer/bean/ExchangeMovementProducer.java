@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Queue;
-import eu.europa.ec.fisheries.schema.movement.module.v1.MovementModuleMethod;
+import fish.focus.schema.movement.module.v1.MovementModuleMethod;
 import fish.focus.uvms.commons.message.impl.AbstractProducer;
 
 @Stateless

@@ -10,27 +10,27 @@ public class PluginTypeMapperTest {
 
     @Test
     public void mapWhenEmail() {
-        assertMapping(PluginType.EMAIL, eu.europa.ec.fisheries.schema.movementrules.exchange.v1.PluginType.EMAIL);
+        assertMapping(PluginType.EMAIL, fish.focus.schema.movementrules.exchange.v1.PluginType.EMAIL);
     }
 
     @Test
     public void mapWhenFLUX() {
-        assertMapping(PluginType.FLUX, eu.europa.ec.fisheries.schema.movementrules.exchange.v1.PluginType.FLUX);
+        assertMapping(PluginType.FLUX, fish.focus.schema.movementrules.exchange.v1.PluginType.FLUX);
     }
 
     @Test
     public void mapWhenSatelliteReceiver() {
-        assertMapping(PluginType.SATELLITE_RECEIVER, eu.europa.ec.fisheries.schema.movementrules.exchange.v1.PluginType.SATELLITE_RECEIVER);
+        assertMapping(PluginType.SATELLITE_RECEIVER, fish.focus.schema.movementrules.exchange.v1.PluginType.SATELLITE_RECEIVER);
     }
 
     @Test
     public void mapWhenNAF() {
-        assertMapping(PluginType.NAF, eu.europa.ec.fisheries.schema.movementrules.exchange.v1.PluginType.NAF);
+        assertMapping(PluginType.NAF, fish.focus.schema.movementrules.exchange.v1.PluginType.NAF);
     }
 
     @Test
     public void mapWhenOther() {
-        assertMapping(PluginType.OTHER, eu.europa.ec.fisheries.schema.movementrules.exchange.v1.PluginType.OTHER);
+        assertMapping(PluginType.OTHER, fish.focus.schema.movementrules.exchange.v1.PluginType.OTHER);
     }
 
     @Test(expected = NullPointerException.class)
@@ -38,7 +38,7 @@ public class PluginTypeMapperTest {
         PluginTypeMapper.map(null);
     }
 
-    private void assertMapping(PluginType input, eu.europa.ec.fisheries.schema.movementrules.exchange.v1.PluginType expectedOutput) {
+    private void assertMapping(PluginType input, fish.focus.schema.movementrules.exchange.v1.PluginType expectedOutput) {
         assertEquals(expectedOutput, PluginTypeMapper.map(input));
     }
 
