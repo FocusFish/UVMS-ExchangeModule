@@ -5,7 +5,7 @@
     <parent>
         <groupId>fish.focus.uvms.exchange</groupId>
         <artifactId>exchange</artifactId>
-        <version>5.3.23</version>
+        <version>5.3.24</version>
     </parent>
 
     <artifactId>exchange-module</artifactId>
@@ -22,7 +22,7 @@
         <!-- Project modules-->
 
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.asset</groupId>
+            <groupId>fish.focus.uvms.asset</groupId>
             <artifactId>asset-client</artifactId>
             <version>${asset.version}</version>
         </dependency>
@@ -73,19 +73,19 @@
             <artifactId>audit-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.movement</groupId>
+            <groupId>fish.focus.uvms.movement</groupId>
             <artifactId>movement-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.movement-rules</groupId>
+            <groupId>fish.focus.uvms.movement-rules</groupId>
             <artifactId>movement-rules-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.asset</groupId>
+            <groupId>fish.focus.uvms.asset</groupId>
             <artifactId>asset-model</artifactId>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.activity</groupId>
+            <groupId>fish.focus.uvms.activity</groupId>
             <artifactId>activity-model</artifactId>
         </dependency>
 

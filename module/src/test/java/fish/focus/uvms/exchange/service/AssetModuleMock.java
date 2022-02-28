@@ -1,6 +1,6 @@
 package fish.focus.uvms.exchange.service;
 
-import eu.europa.ec.fisheries.uvms.asset.client.model.AssetDTO;
+import fish.focus.uvms.asset.client.model.AssetDTO;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;

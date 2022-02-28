@@ -26,11 +26,11 @@ public abstract class AbstractClientTest {
 
         WebArchive testWar = ShrinkWrap.create(WebArchive.class, "exchange.war");
         File[] files = Maven.configureResolver().loadPomFromFile("pom.xml")
-                    .resolve("eu.europa.ec.fisheries.uvms.exchange:exchange-module:jar:classes:?")
+                    .resolve("fish.focus.uvms.exchange:exchange-module:jar:classes:?")
                     .withTransitivity().asFile();
         testWar.addAsLibraries(files);
 
-        testWar.addPackages(true, "eu.europa.ec.fisheries.uvms.exchange.client");
+        testWar.addPackages(true, "fish.focus.uvms.exchange.client");
 
         testWar.addAsResource("beans.xml", "META-INF/beans.xml");
 

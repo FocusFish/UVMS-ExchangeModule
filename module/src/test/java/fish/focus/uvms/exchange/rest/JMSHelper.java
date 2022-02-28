@@ -4,7 +4,7 @@ import fish.focus.schema.exchange.module.v1.ExchangeBaseRequest;
 import fish.focus.schema.exchange.module.v1.ExchangeModuleMethod;
 import fish.focus.schema.exchange.module.v1.PingRequest;
 import fish.focus.schema.exchange.module.v1.PingResponse;
-import eu.europa.ec.fisheries.uvms.movement.model.mapper.JAXBMarshaller;
+import fish.focus.uvms.movement.model.mapper.JAXBMarshaller;
 
 import javax.jms.*;
 import java.util.Enumeration;
