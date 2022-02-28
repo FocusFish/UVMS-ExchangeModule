@@ -224,7 +224,7 @@ public class ExchangeMessageConsumerBean implements MessageListener {
 
     private ExchangeBaseRequest tryConsumeExchangeBaseRequest(TextMessage textMessage) {
         try {
-            if (textMessage.getText().startsWith("<ns2:AcknowledgeResponse xmlns:ns2=\"urn:plugin.exchange.schema.fisheries.ec.europa.eu:v1\">")) {
+            if (textMessage.getText().startsWith("<ns2:AcknowledgeResponse xmlns:ns2=\"urn:plugin.exchange.schema.focus.fish:v1\">")) {
                 LOG.debug("Received deprecated plugin Ack response with message " + textMessage.getText());
                 ExchangeBaseRequest plugin = new SetCommandRequest();
                 // They all go to the same place so this does not matter, also this is really ugly ;(
