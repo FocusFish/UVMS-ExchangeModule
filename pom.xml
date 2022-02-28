@@ -37,7 +37,7 @@
         <!-- Uvms models -->
         <asset.version>6.8.23</asset.version>
         <user.model.version>2.2.3</user.model.version>
-        <audit.model.version>4.3.11</audit.model.version>
+        <audit.model.version>4.3.12</audit.model.version>
         <movement.model.version>5.6.9</movement.model.version>
         <movement.rules.model.version>2.4.15</movement.rules.model.version>
         <activity.model.version>1.2.15</activity.model.version>
