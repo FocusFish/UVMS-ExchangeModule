@@ -77,7 +77,7 @@ public class ExchangeSendingQueueRestResourceTest extends BuildExchangeRestTestD
     public void sendTest() throws Exception {
         JMSHelper jmsHelper = new JMSHelper(connectionFactory);
         String serviceName = "Email Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.sweagencyemail";
+        String serviceClassName = "fish.focus.uvms.plugins.sweagencyemail";
         int sizeB4 = unsentMessageDao.getAll().size();
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.EMAIL);
 

@@ -120,7 +120,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
     @OperateOnDeployment("exchangeservice")
     public void setCommandEmailTest() throws Exception {
         String serviceName = "Email Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.sweagencyemail";
+        String serviceClassName = "fish.focus.uvms.plugins.sweagencyemail";
         int sizeB4 = unsentMessageDao.getAll().size();
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.EMAIL);
 
@@ -151,7 +151,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
     @OperateOnDeployment("exchangeservice")
     public void setCommandEmailPluginNotStartedTest() throws Exception {
         String serviceName = "Email Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.sweagencyemail";
+        String serviceClassName = "fish.focus.uvms.plugins.sweagencyemail";
         int sizeB4 = unsentMessageDao.getAll().size();
         ExchangeLog latestLogB4 = exchangeLogDao.getLatestLog();
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.EMAIL);
@@ -179,7 +179,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
     @OperateOnDeployment("exchangeservice")
     public void setCommandPollTest() throws Exception {
         String serviceName = "Poll Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.inmarsat";
+        String serviceClassName = "fish.focus.uvms.plugins.inmarsat";
         System.out.println("Now");
         String guid = UUID.randomUUID().toString();
         int sizeB4 = unsentMessageDao.getAll().size();
@@ -222,7 +222,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
     @OperateOnDeployment("exchangeservice")
     public void sendReportToPluginTest() throws Exception {
         String serviceName = "Flux Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.fluxus";
+        String serviceClassName = "fish.focus.uvms.plugins.fluxus";
         int sizeB4 = unsentMessageDao.getAll().size();
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.FLUX);
         MovementType movementType = createMovementType();
@@ -259,7 +259,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
     @OperateOnDeployment("exchangeservice")
     public void updatePluginSettingTest() throws Exception {
         String serviceName = "Alien Activity Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.Aliens";
+        String serviceClassName = "fish.focus.uvms.plugins.Aliens";
         String settingName = "HomePlanet";
 
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.BELGIAN_ACTIVITY);
@@ -450,7 +450,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
     @OperateOnDeployment("exchangeservice")
     public void setMovementReportTest() throws Exception {
         String serviceName = "Iridium Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.Iridium";
+        String serviceClassName = "fish.focus.uvms.plugins.Iridium";
         String guid = UUID.randomUUID().toString();
 
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.SATELLITE_RECEIVER);
@@ -491,7 +491,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
     @OperateOnDeployment("exchangeservice")
     public void processedMovementAlarmTest() throws Exception {
         String serviceName = "Iridium Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.Iridium";
+        String serviceClassName = "fish.focus.uvms.plugins.Iridium";
 
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.SATELLITE_RECEIVER);
 
@@ -528,7 +528,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
     @OperateOnDeployment("exchangeservice")
     public void processedMovementSuccessTest() throws Exception {
         String serviceName = "Iridium Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.Iridium";
+        String serviceClassName = "fish.focus.uvms.plugins.Iridium";
 
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.SATELLITE_RECEIVER);
 
@@ -574,7 +574,7 @@ public class ExchangeMessageConsumerBeanTest extends BuildExchangeServiceTestDep
 
         // Create incoming position with reference to poll
         String serviceName = "Iridium Test Service";
-        String serviceClassName = "eu.europa.ec.fisheries.uvms.plugins.Iridium";
+        String serviceClassName = "fish.focus.uvms.plugins.Iridium";
 
         Service service = createAndPersistBasicService(serviceName, serviceClassName, PluginType.SATELLITE_RECEIVER);
 
