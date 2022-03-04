@@ -22,7 +22,6 @@ import java.util.*;
 import fish.focus.schema.exchange.module.v1.ExchangeBaseRequest;
 import fish.focus.schema.exchange.movement.v1.MovementRefType;
 import fish.focus.schema.exchange.v1.*;
-import eu.europa.ec.fisheries.uvms.longpolling.notifications.NotificationMessage;
 import fish.focus.uvms.exchange.service.dao.ExchangeLogDaoBean;
 import fish.focus.uvms.exchange.service.dao.UnsentMessageDaoBean;
 import fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLog;
@@ -43,14 +42,6 @@ public class ExchangeLogServiceBean {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExchangeLogServiceBean.class);
 
-    @Inject
-    @ExchangeLogEvent
-    private Event<NotificationMessage> exchangeLogEvent;
-
-    @Inject
-    @ExchangeSendingQueueEvent
-    private Event<NotificationMessage> sendingQueueEvent;
-
     @EJB
     private ExchangeLogModelBean exchangeLogModel;
 
@@ -66,7 +57,6 @@ public class ExchangeLogServiceBean {
     public ExchangeLog log(ExchangeLog log) {
         ExchangeLog exchangeLog = exchangeLogDao.createLog(log);
         String guid = exchangeLog.getId().toString();
-        exchangeLogEvent.fire(new NotificationMessage("guid", guid));
         LOG.debug("[INFO] Logging message with guid : [ "+guid+" ] was successful.");
         return exchangeLog;
     }
@@ -122,8 +112,6 @@ public class ExchangeLogServiceBean {
         UUID logGuid = UUID.fromString(logId);
         ExchangeLogStatus exchangeLogStatus = createExchangeLogStatus(logStatus);
         ExchangeLog updatedLog = exchangeLogModel.updateExchangeLogStatus(exchangeLogStatus, username, logGuid);
-        // For long polling
-        exchangeLogEvent.fire(new NotificationMessage("guid", updatedLog.getId().toString()));
         return updatedLog;
     }
 
@@ -196,7 +184,6 @@ public class ExchangeLogServiceBean {
         String createdUnsentMessageId = unsentMessageDao.create(unsentMessage).getGuid().toString();
 
         List<String> unsentMessageIds = Collections.singletonList(createdUnsentMessageId);
-        sendingQueueEvent.fire(new NotificationMessage("messageIds", unsentMessageIds));
         return createdUnsentMessageId;
     }
 
@@ -217,7 +204,6 @@ public class ExchangeLogServiceBean {
         }
 
         List<String> removedMessageIds = Collections.singletonList(removeMessageId);
-        sendingQueueEvent.fire(new NotificationMessage("messageIds", removedMessageIds));
     }
 
     public void updateTypeRef(ExchangeLog exchangeLogStatus, MovementRefType movementRefType){
@@ -235,8 +221,6 @@ public class ExchangeLogServiceBean {
         LOG.debug("resend in service layer:{} {}",messageIdList,username);
         List<UnsentMessage> unsentMessageList = getAndRemoveUnsentMessagesFromDB(messageIdList);
         if (!unsentMessageList.isEmpty()) {
-            sendingQueueEvent.fire(new NotificationMessage("messageIds", messageIdList));
-
             for (UnsentMessage unsentMessage : unsentMessageList) {
                 try {
                     String unsentMessageId = exchangeEventProducer.sendExchangeEventMessage(unsentMessage.getMessage(), unsentMessage.getFunction());
@@ -255,8 +239,6 @@ public class ExchangeLogServiceBean {
         ExchangeLogType exchangeLogType = exchangeLogModel.setPollStatus(pollStatus, username, refMessage);
         pollStatus.setExchangeLogGuid(exchangeLogType.getGuid());
 
-        // For long polling
-        exchangeLogEvent.fire(new NotificationMessage("guid", pollStatus.getExchangeLogGuid()));
         return pollStatus;
     }
 
