@@ -99,7 +99,7 @@ public class ExchangeRestClient {
         if(response.getStatus() != 200) {
             throw new RuntimeException("Errormessage from exchange: " + response.readEntity(String.class));
         }
-        if(response.getLength() == 0){
+        if(response.getLength() <= 0){
             return null;
         }
         return response.readEntity(ExchangeLogStatusType.class);
