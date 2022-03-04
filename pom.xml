@@ -44,13 +44,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Third party libs -->
-            <dependency>
-                <groupId>eu.europa.ec.fisheries.uvms</groupId>
-                <artifactId>uvms-longpolling</artifactId>
-                <version>${longpolling.version}</version>
-            </dependency>
-
             <!-- Uvms libs -->
             <dependency>
                 <groupId>fish.focus.uvms.lib</groupId>
