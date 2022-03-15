@@ -1,7 +1,6 @@
 package fish.focus.uvms.exchange.service.bean;
 
 import fish.focus.schema.exchange.v1.ExchangeLogStatusTypeType;
-import eu.europa.ec.fisheries.uvms.longpolling.notifications.NotificationMessage;
 import fish.focus.uvms.exchange.service.bean.ExchangeLogModelBean;
 import fish.focus.uvms.exchange.service.bean.ExchangeLogServiceBean;
 import fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLog;
@@ -32,9 +31,6 @@ public class ExchangeLogServiceBeanTest {
 
     @Mock
     private ExchangeLogModelBean exchangeLogModel;
-
-    @Mock
-    private Event<NotificationMessage> exchangeLogEvent; // Yes this is used
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();

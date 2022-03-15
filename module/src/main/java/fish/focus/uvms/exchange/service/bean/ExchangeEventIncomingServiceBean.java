@@ -27,7 +27,6 @@ import fish.focus.uvms.activity.model.schemas.MessageType;
 import fish.focus.uvms.activity.model.schemas.SyncAsyncRequestType;
 import fish.focus.uvms.commons.date.JsonBConfigurator;
 import fish.focus.uvms.commons.message.impl.JAXBUtils;
-import eu.europa.ec.fisheries.uvms.longpolling.notifications.NotificationMessage;
 import fish.focus.uvms.exchange.model.mapper.ExchangeModuleResponseMapper;
 import fish.focus.uvms.exchange.model.mapper.JAXBMarshaller;
 import fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLog;
@@ -72,14 +71,6 @@ public class ExchangeEventIncomingServiceBean {
     @Inject
     @PluginErrorEvent
     private Event<PluginErrorEventCarrier> pluginErrorEvent;
-
-    @Inject
-    @ExchangePluginStatusEvent
-    private Event<NotificationMessage> pluginStatusEvent;
-
-    @Inject
-    @PollEvent
-    private Event<NotificationMessage> pollEvent;
 
     @Inject
     private ServiceRegistryModelBean serviceRegistryModel;
@@ -430,11 +421,9 @@ public class ExchangeEventIncomingServiceBean {
                     break;
                 case START:
                     handleUpdateServiceAcknowledge(serviceClassName, acknowledge, StatusType.STARTED);
-                    pluginStatusEvent.fire(createNotificationMessage(serviceClassName, true));
                     break;
                 case STOP:
                     handleUpdateServiceAcknowledge(serviceClassName, acknowledge, StatusType.STOPPED);
-                    pluginStatusEvent.fire(createNotificationMessage(serviceClassName, false));
                     break;
                 case SET_CONFIG:
                 default:
@@ -519,12 +508,6 @@ public class ExchangeEventIncomingServiceBean {
         }
 
         ExchangeLog updatedLog = exchangeLogService.updateStatus(ack.getLogId(), logStatus, serviceClassName);
-
-        // Long polling
-        if (updatedLog.getTypeRefGuid() != null && updatedLog.getTypeRefType() == TypeRefType.POLL) {
-            String pollGuid = updatedLog.getTypeRefGuid().toString();
-            pollEvent.fire(new NotificationMessage("guid", pollGuid));
-        }
     }
 
     private void handleSetPollStatusAcknowledge(ExchangePluginMethod method, String serviceClassName, AcknowledgeType ack) {
@@ -532,8 +515,6 @@ public class ExchangeEventIncomingServiceBean {
         ExchangeLogStatusTypeType exchangeLogStatus = ack.getPollStatus().getStatus();
         removeUnsentMessage(ack);
         PollStatus updatedLog = exchangeLogService.setPollStatus(UUID.fromString(ack.getPollStatus().getPollId()), exchangeLogStatus, serviceClassName, ack.getMessage());
-        // Long polling
-        pollEvent.fire(new NotificationMessage("guid", updatedLog.getPollGuid()));
     }
 
     private void removeUnsentMessage(AcknowledgeType ack) {
@@ -555,12 +536,6 @@ public class ExchangeEventIncomingServiceBean {
         if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.NOK) {//TODO Audit.log()
             LOG.error(serviceClassName + " didn't like it. " + ack.getMessage());
         }
-    }
-
-    private NotificationMessage createNotificationMessage(String serviceClassName, boolean started) {
-        NotificationMessage msg = new NotificationMessage("serviceClassName", serviceClassName);
-        msg.setProperty("started", started);
-        return msg;
     }
 
     private TypeRefType extractFaType(ExchangeModuleMethod method) {

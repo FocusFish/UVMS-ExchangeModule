@@ -37,7 +37,6 @@ import fish.focus.schema.exchange.v1.ExchangeLogStatusTypeType;
 import fish.focus.schema.exchange.v1.LogType;
 import fish.focus.schema.exchange.v1.TypeRefType;
 import fish.focus.uvms.commons.message.api.MessageConstants;
-import eu.europa.ec.fisheries.uvms.longpolling.notifications.NotificationMessage;
 import fish.focus.wsdl.asset.types.Asset;
 import fish.focus.wsdl.user.types.Organisation;
 import fish.focus.uvms.exchange.model.mapper.ExchangePluginRequestMapper;
@@ -79,10 +78,6 @@ public class ExchangeEventOutgoingServiceBean {
     @Inject
     @PluginErrorEvent
     private Event<PluginErrorEventCarrier> pluginErrorEvent;
-
-    @Inject
-    @PollEvent
-    private Event<NotificationMessage> pollEvent;
 
     @Inject
     private ExchangeLogModelBean exchangeLogModel;

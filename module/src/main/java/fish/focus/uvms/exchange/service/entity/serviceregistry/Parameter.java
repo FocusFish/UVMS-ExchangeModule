@@ -125,7 +125,7 @@ public class Parameter implements Serializable {
 
     @Override
     public String toString() {
-        return "eu.europa.ec.fisheries.uvms.exchange.entity.component.Parameter[ paramId=" + paramId + " ]";
+        return "fish.focus.uvms.exchange.entity.component.Parameter[ paramId=" + paramId + " ]";
     }
 
 	public List<ServiceParameterMapping> getMap() {

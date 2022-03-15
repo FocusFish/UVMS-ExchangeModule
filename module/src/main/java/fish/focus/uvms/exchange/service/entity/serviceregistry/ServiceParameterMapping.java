@@ -120,7 +120,7 @@ public class ServiceParameterMapping implements Serializable {
 
     @Override
     public String toString() {
-        return "eu.europa.ec.fisheries.uvms.exchange.service.entity.serviceregistry.Servicemapping[ mapId=" + id + " ]";
+        return "fish.focus.uvms.exchange.service.entity.serviceregistry.Servicemapping[ mapId=" + id + " ]";
     }
 
 	public Parameter getSetting() {
