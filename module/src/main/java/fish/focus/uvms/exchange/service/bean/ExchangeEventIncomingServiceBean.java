@@ -31,8 +31,6 @@ import fish.focus.uvms.exchange.model.mapper.ExchangeModuleResponseMapper;
 import fish.focus.uvms.exchange.model.mapper.JAXBMarshaller;
 import fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLog;
 import fish.focus.uvms.exchange.service.entity.serviceregistry.Service;
-import fish.focus.uvms.exchange.service.event.ExchangePluginStatusEvent;
-import fish.focus.uvms.exchange.service.event.PollEvent;
 import fish.focus.uvms.exchange.service.mapper.MovementMapper;
 import fish.focus.uvms.exchange.service.mapper.ServiceMapper;
 import fish.focus.uvms.exchange.service.message.event.ErrorEvent;
@@ -226,7 +224,7 @@ public class ExchangeEventIncomingServiceBean {
         } catch (JMSException e) {
             final String ERROR_MESSAGE = "Could not process EfrSaveActivity";
             LOG.error(ERROR_MESSAGE, e);
-            throw new RuntimeException(ERROR_MESSAGE, e);
+            throw new IllegalArgumentException(ERROR_MESSAGE, e);
         }
     }
 
@@ -497,43 +495,39 @@ public class ExchangeEventIncomingServiceBean {
         ExchangeLogStatusTypeType logStatus = ExchangeLogStatusTypeType.FAILED;
         if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.OK) {//TODO if(poll probably transmitted)
             logStatus = ExchangeLogStatusTypeType.SUCCESSFUL;
-            removeUnsentMessage(ack);
-
+            exchangeLogService.removeUnsentMessage(ack.getUnsentMessageGuid());
         } else if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.NOK) {
-            LOG.debug(method + " was NOK: " + ack.getMessage());
+            LOG.debug("{} was NOK: {}", method, ack.getMessage());
+            exchangeLogService.acknowledgeUnsentMessage(ack.getUnsentMessageGuid());
         }
 
         if (ack.getMessage() != null) {
             exchangeLogService.updateLogMessage(ack.getLogId(), ack.getMessage());
         }
 
-        ExchangeLog updatedLog = exchangeLogService.updateStatus(ack.getLogId(), logStatus, serviceClassName);
+        exchangeLogService.updateStatus(ack.getLogId(), logStatus, serviceClassName);
     }
 
     private void handleSetPollStatusAcknowledge(ExchangePluginMethod method, String serviceClassName, AcknowledgeType ack) {
-        LOG.debug(method + " was acknowledged in " + serviceClassName);
+        LOG.debug("{} was acknowledged in {}", method, serviceClassName);
         ExchangeLogStatusTypeType exchangeLogStatus = ack.getPollStatus().getStatus();
-        removeUnsentMessage(ack);
-        PollStatus updatedLog = exchangeLogService.setPollStatus(UUID.fromString(ack.getPollStatus().getPollId()), exchangeLogStatus, serviceClassName, ack.getMessage());
-    }
-
-    private void removeUnsentMessage(AcknowledgeType ack) {
         exchangeLogService.removeUnsentMessage(ack.getUnsentMessageGuid());
+        exchangeLogService.setPollStatus(UUID.fromString(ack.getPollStatus().getPollId()), exchangeLogStatus, serviceClassName, ack.getMessage());
     }
 
     private void handleUpdateServiceAcknowledge(String serviceClassName, AcknowledgeType ack, StatusType status) {
         if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.OK) {
             serviceRegistryModel.updatePluginStatus(serviceClassName, status, serviceClassName);
 
-        } else if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.NOK) {//TODO Audit.log()
-            LOG.error("Couldn't start service " + serviceClassName);
+        } else if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.NOK) {
+            LOG.error("Couldn't start service {}", serviceClassName);
 
         }
     }
 
     private void handleAcknowledge(ExchangePluginMethod method, String serviceClassName, AcknowledgeType ack) {
-        LOG.debug(method + " was acknowledged in " + serviceClassName);
-        if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.NOK) {//TODO Audit.log()
+        LOG.debug("{} was acknowledged in {}", method, serviceClassName);
+        if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.NOK) {
             LOG.error(serviceClassName + " didn't like it. " + ack.getMessage());
         }
     }
