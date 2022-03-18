@@ -191,7 +191,7 @@ public class ExchangeLogServiceBean {
         if (entity != null) {
             unsentMessageDao.remove(entity);
         } else {
-            LOG.error("[ No message with id {} to remove ]", unsentMessageId);
+            LOG.error("No message with id {} to remove", unsentMessageId);
         }
     }
 
@@ -206,7 +206,7 @@ public class ExchangeLogServiceBean {
             entity.setAcknowledged(true);
             unsentMessageDao.update(entity);
         } else {
-            LOG.error("[ No message with id {} to remove ]", unsentMessageId);
+            LOG.error("No message with id {} to acknowledge", unsentMessageId);
         }
     }
 
