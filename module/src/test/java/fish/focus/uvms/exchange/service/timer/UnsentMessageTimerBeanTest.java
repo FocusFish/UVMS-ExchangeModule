@@ -43,6 +43,7 @@ public class UnsentMessageTimerBeanTest extends TransactionalTests {
         unsentMessage.setDateReceived(Instant.now());
         unsentMessage.setUpdatedBy("test");
         unsentMessage.setMessage("Message");
+        unsentMessage.setAcknowledged(true);
         unsentMessageDao.create(unsentMessage);
         int before = unsentMessageDao.getAll().size();
 
@@ -51,7 +52,51 @@ public class UnsentMessageTimerBeanTest extends TransactionalTests {
         int after = unsentMessageDao.getAll().size();
         assertThat(after, CoreMatchers.is(before - 1));
     }
-    
+
+    @Test
+    @OperateOnDeployment("exchangeservice")
+    public void unsentMessageTimerNotAcknowledgedTest() throws ConfigServiceException {
+        parameterService.setStringValue(ParameterKey.UNSENT_MESSAGE_THRESHOLD.getKey(), "-1", "workaround");
+
+        UnsentMessage unsentMessage = new UnsentMessage();
+        unsentMessage.setDateReceived(Instant.now());
+        unsentMessage.setUpdatedBy("test");
+        unsentMessage.setMessage("Message");
+        unsentMessage.setAcknowledged(false);
+        unsentMessageDao.create(unsentMessage);
+        int before = unsentMessageDao.getAll().size();
+
+        unsentMessageTimer.resendUnsentMessages();
+
+        int after = unsentMessageDao.getAll().size();
+        assertThat(after, CoreMatchers.is(before));
+    }
+
+    @Test
+    @OperateOnDeployment("exchangeservice")
+    public void unsentMessageTimerNotAcknowledgeUpdatedTest() throws ConfigServiceException {
+        parameterService.setStringValue(ParameterKey.UNSENT_MESSAGE_THRESHOLD.getKey(), "-1", "workaround");
+
+        UnsentMessage unsentMessage = new UnsentMessage();
+        unsentMessage.setDateReceived(Instant.now());
+        unsentMessage.setUpdatedBy("test");
+        unsentMessage.setMessage("Message");
+        unsentMessage.setAcknowledged(false);
+        unsentMessageDao.create(unsentMessage);
+        int before = unsentMessageDao.getAll().size();
+
+        unsentMessageTimer.resendUnsentMessages();
+
+        int after = unsentMessageDao.getAll().size();
+        assertThat(after, CoreMatchers.is(before));
+
+        unsentMessage.setAcknowledged(true);
+        unsentMessageTimer.resendUnsentMessages();
+
+        int afterAcknowledged = unsentMessageDao.getAll().size();
+        assertThat(afterAcknowledged, CoreMatchers.is(before - 1));
+    }
+
     @Test
     @OperateOnDeployment("exchangeservice")
     public void unsentMessageTimerDisabledTest() throws ConfigServiceException {
@@ -61,6 +106,7 @@ public class UnsentMessageTimerBeanTest extends TransactionalTests {
         unsentMessage.setDateReceived(Instant.now());
         unsentMessage.setUpdatedBy("test");
         unsentMessage.setMessage("Message");
+        unsentMessage.setAcknowledged(true);
         unsentMessageDao.create(unsentMessage);
         int before = unsentMessageDao.getAll().size();
 
