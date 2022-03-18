@@ -30,9 +30,18 @@ public class UnsentMessageDaoBean extends AbstractDao {
         return unsentMessage;
     }
 
+    public UnsentMessage update(UnsentMessage unsentMessage) {
+        return em.merge(unsentMessage);
+    }
+
     public List<UnsentMessage> getAll() {
         TypedQuery<UnsentMessage> query = em.createNamedQuery(UnsentMessage.UNSENT_FIND_ALL, UnsentMessage.class);
         return query.getResultList();
+    }
+
+    public List<UnsentMessage> getAcknowledged() {
+        return em.createNamedQuery(UnsentMessage.UNSENT_FIND_ACKNOWLEDGED, UnsentMessage.class)
+                .getResultList();
     }
 
     public UnsentMessage getByGuid(UUID guid) {

@@ -13,7 +13,6 @@ package fish.focus.uvms.exchange.service.bean;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import java.time.Instant;
@@ -28,8 +27,6 @@ import fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLog;
 import fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLogStatus;
 import fish.focus.uvms.exchange.service.entity.unsent.UnsentMessage;
 import fish.focus.uvms.exchange.service.entity.unsent.UnsentMessageProperty;
-import fish.focus.uvms.exchange.service.event.ExchangeLogEvent;
-import fish.focus.uvms.exchange.service.event.ExchangeSendingQueueEvent;
 import fish.focus.uvms.exchange.service.mapper.ExchangeLogMapper;
 import fish.focus.uvms.exchange.service.mapper.LogMapper;
 import fish.focus.uvms.exchange.service.message.producer.bean.ExchangeEventProducer;
@@ -57,7 +54,7 @@ public class ExchangeLogServiceBean {
     public ExchangeLog log(ExchangeLog log) {
         ExchangeLog exchangeLog = exchangeLogDao.createLog(log);
         String guid = exchangeLog.getId().toString();
-        LOG.debug("[INFO] Logging message with guid : [ "+guid+" ] was successful.");
+        LOG.debug("[INFO] Logging message with guid : [ {} ] was successful.", guid);
         return exchangeLog;
     }
 
@@ -111,8 +108,7 @@ public class ExchangeLogServiceBean {
     public ExchangeLog updateStatus(String logId, ExchangeLogStatusTypeType logStatus, String username) {
         UUID logGuid = UUID.fromString(logId);
         ExchangeLogStatus exchangeLogStatus = createExchangeLogStatus(logStatus);
-        ExchangeLog updatedLog = exchangeLogModel.updateExchangeLogStatus(exchangeLogStatus, username, logGuid);
-        return updatedLog;
+        return exchangeLogModel.updateExchangeLogStatus(exchangeLogStatus, username, logGuid);
     }
 
     private ExchangeLogStatus createExchangeLogStatus(ExchangeLogStatusTypeType logStatus) {
@@ -174,6 +170,7 @@ public class ExchangeLogServiceBean {
         unsentMessage.setRecipient(recipient);
         unsentMessage.setMessage(message);
         unsentMessage.setUpdatedBy(username);
+        unsentMessage.setAcknowledged(false);
         unsentMessage.setProperties(new ArrayList<>());
         unsentMessage.getProperties().addAll(properties);
 
@@ -181,29 +178,36 @@ public class ExchangeLogServiceBean {
 
         unsentMessage.setFunction(function);
 
-        String createdUnsentMessageId = unsentMessageDao.create(unsentMessage).getGuid().toString();
-
-        List<String> unsentMessageIds = Collections.singletonList(createdUnsentMessageId);
-        return createdUnsentMessageId;
+        return unsentMessageDao.create(unsentMessage).getGuid().toString();
     }
 
     public void removeUnsentMessage(String unsentMessageId) {
-        LOG.trace("removeUnsentMessage in service layer:{}",unsentMessageId);
+        LOG.trace("removeUnsentMessage in service layer:{}", unsentMessageId);
         if (unsentMessageId == null) {
             throw new IllegalArgumentException("No message to remove");
         }
 
-        String removeMessageId = null;
         UnsentMessage entity = unsentMessageDao.getByGuid(UUID.fromString(unsentMessageId));
         if (entity != null) {
-            removeMessageId = entity.getGuid().toString();
             unsentMessageDao.remove(entity);
         } else {
-            LOG.error("[ No message with id {} to remove ]", unsentMessageId);
-            return;
+            LOG.error("No message with id {} to remove", unsentMessageId);
+        }
+    }
+
+    public void acknowledgeUnsentMessage(String unsentMessageId) {
+        LOG.trace("removeUnsentMessage in service layer:{}", unsentMessageId);
+        if (unsentMessageId == null) {
+            throw new IllegalArgumentException("No message acknowledge");
         }
 
-        List<String> removedMessageIds = Collections.singletonList(removeMessageId);
+        UnsentMessage entity = unsentMessageDao.getByGuid(UUID.fromString(unsentMessageId));
+        if (entity != null) {
+            entity.setAcknowledged(true);
+            unsentMessageDao.update(entity);
+        } else {
+            LOG.error("No message with id {} to acknowledge", unsentMessageId);
+        }
     }
 
     public void updateTypeRef(ExchangeLog exchangeLogStatus, MovementRefType movementRefType){
@@ -223,7 +227,7 @@ public class ExchangeLogServiceBean {
         if (!unsentMessageList.isEmpty()) {
             for (UnsentMessage unsentMessage : unsentMessageList) {
                 try {
-                    String unsentMessageId = exchangeEventProducer.sendExchangeEventMessage(unsentMessage.getMessage(), unsentMessage.getFunction());
+                    exchangeEventProducer.sendExchangeEventMessage(unsentMessage.getMessage(), unsentMessage.getFunction());
                 } catch (Exception e) {
                     LOG.error("Error when sending/receiving message {} {}",messageIdList, e);
                 }
@@ -254,7 +258,7 @@ public class ExchangeLogServiceBean {
                 UnsentMessage removedMessage = unsentMessageDao.remove(message);
                 unsentMessageList.add(removedMessage);
             } catch (NoResultException e) {
-                LOG.error("Couldn't find message to resend with guid: " + messageId);
+                LOG.error("Couldn't find message to resend with guid: {}", messageId);
             }
         }
         return unsentMessageList;

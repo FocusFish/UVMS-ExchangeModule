@@ -52,7 +52,7 @@ public class UnsentMessageTimerBean {
             LOG.debug("Execution cancelled, threshold is {}", threshold);
             return;
         }
-        List<UnsentMessage> unsentMessageList = unsentMessageDao.getAll();
+        List<UnsentMessage> unsentMessageList = unsentMessageDao.getAcknowledged();
         for (UnsentMessage unsentMessage : unsentMessageList) {
             if (unsentMessage.getUpdateTime().isBefore(Instant.now().minus(threshold, ChronoUnit.MINUTES))) {
                 LOG.info("Resending unsent message {} to {}", unsentMessage.getGuid(), unsentMessage.getRecipient());
