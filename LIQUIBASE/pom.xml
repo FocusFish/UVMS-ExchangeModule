@@ -4,7 +4,7 @@
     <parent>
         <groupId>fish.focus.uvms.exchange</groupId>
         <artifactId>exchange</artifactId>
-        <version>5.3.27</version>
+        <version>5.3.28</version>
     </parent>
 
     <artifactId>liquibase</artifactId>
@@ -26,7 +26,7 @@
                 <db.outputFile>changelog/generatedChangelog.xml</db.outputFile>
                 <driver.groupId>org.postgresql</driver.groupId>
                 <driver.artifactId>postgresql</driver.artifactId>
-                <driver.version>42.3.3</driver.version>
+                <driver.version>42.7.0</driver.version>
             </properties>
             <dependencies>
 		        <dependency>
@@ -43,7 +43,7 @@
 					<plugin>
 						<groupId>org.liquibase</groupId>
 						<artifactId>liquibase-maven-plugin</artifactId>
-						<version>4.9.0</version>
+						<version>4.25.0</version>
 						<configuration>
 							<url>${db.docker.url}</url>
 							<migrationSqlOutputFile>${project.build.directory}/full-update.sql</migrationSqlOutputFile>
@@ -63,7 +63,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>3.3.0</version>
+						<version>3.5.0</version>
 						<executions>
 							<execution>
 								<id>attach-artifacts</id>
@@ -96,7 +96,7 @@
                 <plugin>
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>4.9.0</version>
+                    <version>4.25.0</version>
                     <configuration>
                         <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                         <changeLogFile>${db.changeLogFile}</changeLogFile>
@@ -113,7 +113,7 @@
         <plugins>
         	<plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>3.6.0</version>
                     <configuration>
                         <descriptors>assembly.xml</descriptors>
                         <finalName>${project.artifactId}</finalName>
@@ -130,7 +130,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <version>3.3.0</version>
                     <executions>
                         <execution>
                             <id>default-jar</id>
@@ -142,7 +142,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.2</version>
+                    <version>3.1.1</version>
                     <goals>
                         <goal>deploy-file</goal>
                     </goals>
