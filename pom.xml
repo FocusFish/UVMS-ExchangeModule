@@ -28,7 +28,7 @@
         <docker.liquibase.db.passwd>exchange</docker.liquibase.db.passwd>
 
         <!-- Uvms libs -->
-        <uvms.commons.version>4.1.12</uvms.commons.version>
+        <uvms.commons.version>4.1.14</uvms.commons.version>
         <usm4uvms.version>4.1.11</usm4uvms.version>
         <uvms.config.version>4.1.6</uvms.config.version>
         <uvms-pom-deps.version>3.19</uvms-pom-deps.version>
