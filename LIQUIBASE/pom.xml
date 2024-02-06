@@ -4,7 +4,7 @@
     <parent>
         <groupId>fish.focus.uvms.exchange</groupId>
         <artifactId>exchange</artifactId>
-        <version>5.3.29</version>
+        <version>5.3.30-SNAPSHOT</version>
     </parent>
 
     <artifactId>liquibase</artifactId>
