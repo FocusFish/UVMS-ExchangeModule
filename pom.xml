@@ -9,7 +9,7 @@
 
     <groupId>fish.focus.uvms.exchange</groupId>
     <artifactId>exchange</artifactId>
-    <version>5.3.28</version>
+    <version>5.3.29</version>
     <packaging>pom</packaging>
     
     <scm>
@@ -22,13 +22,13 @@
 
         <scm.connection>scm:git:https://github.com/FocusFish/UVMS-ExchangeModule.git</scm.connection>
 
-        <docker.dev.version>4.2.21</docker.dev.version>
+        <docker.dev.version>4.2.25</docker.dev.version>
         <docker.liquibase.changeLogFile>LIQUIBASE/changelog/db-changelog-master.xml</docker.liquibase.changeLogFile>
         <docker.liquibase.db.user>exchange</docker.liquibase.db.user>
         <docker.liquibase.db.passwd>exchange</docker.liquibase.db.passwd>
 
         <!-- Uvms libs -->
-        <uvms.commons.version>4.1.12</uvms.commons.version>
+        <uvms.commons.version>4.1.15</uvms.commons.version>
         <usm4uvms.version>4.1.11</usm4uvms.version>
         <uvms.config.version>4.1.6</uvms.config.version>
         <uvms-pom-deps.version>3.19</uvms-pom-deps.version>
@@ -37,7 +37,7 @@
         <asset.version>6.8.27</asset.version>
         <user.model.version>2.2.6</user.model.version>
         <audit.model.version>4.3.12</audit.model.version>
-        <movement.model.version>5.6.17</movement.model.version>
+        <movement.model.version>5.6.19</movement.model.version>
         <movement.rules.model.version>2.4.16</movement.rules.model.version>
         <activity.model.version>1.2.18</activity.model.version>
     </properties>
