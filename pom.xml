@@ -9,7 +9,7 @@
 
     <groupId>fish.focus.uvms.exchange</groupId>
     <artifactId>exchange</artifactId>
-    <version>5.3.31</version>
+    <version>5.3.32-SNAPSHOT</version>
     <packaging>pom</packaging>
     
     <scm>
