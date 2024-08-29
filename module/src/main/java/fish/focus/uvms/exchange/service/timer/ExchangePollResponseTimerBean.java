@@ -21,7 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.Schedule;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -49,8 +52,7 @@ public class ExchangePollResponseTimerBean {
     private ExchangeLogDaoBean logDao;
 
     @PostConstruct
-    public void init(){
-
+    public void init() {
         ExchangeListPagination pagination = new ExchangeListPagination();
         pagination.setListSize(1000);
         pagination.setPage(1);
@@ -84,13 +86,12 @@ public class ExchangePollResponseTimerBean {
     @Schedule(minute = "*/5", hour = "*", persistent = false)
     public void pollResponseTimer() {
         try {
-            Instant from = Instant.now().minus( 1, ChronoUnit.DAYS);
+            Instant from = Instant.now().minus(1, ChronoUnit.DAYS);
             dateCriteria.setValue(DateUtils.dateToEpochMilliseconds(from));
 
             ListResponseDto logList = exchangeLogModel.getExchangeLogListByQuery(query);
             for (ExchangeLogType exchangeLog : logList.getExchangeLogList()) {
-                if(exchangeLog.getDateRecieved().toInstant().isBefore(Instant.now().minus(POLL_TIMEOUT_TIME_IN_MINUTES, ChronoUnit.MINUTES))) {
-
+                if (exchangeLog.getDateRecieved().toInstant().isBefore(Instant.now().minus(POLL_TIMEOUT_TIME_IN_MINUTES, ChronoUnit.MINUTES))) {
                     PollStatus pollStatus = new PollStatus();
                     pollStatus.setStatus(ExchangeLogStatusTypeType.FAILED);
                     pollStatus.setExchangeLogGuid(exchangeLog.getGuid());
@@ -104,11 +105,8 @@ public class ExchangePollResponseTimerBean {
                     exchangeLogModelBean.setPollStatus(pollStatus, "Poll Response Timer", "No response within 8 minutes");
                 }
             }
-
         } catch (Exception e) {
-            LOG.error("[ Error when running pollResponseTimer. ] {}", e);
-            throw e;
+            LOG.error("[ Error when running pollResponseTimer. ]", e);
         }
     }
-
 }
