@@ -19,5 +19,6 @@
     <include file="\v5.3.8\db-changelog_add_additional_ref_to_log.xml" relativeToChangelogFile="true"/>
     <include file="\v5.3.8\db-changelog_add_unsent_message_resend_parameter.xml" relativeToChangelogFile="true"/>
     <include file="\v5.3.27\db-changelog_add_unsent_message_acknowledged.xml" relativeToChangelogFile="true"/>
+    <include file="\v5.3.32\db-changelog_add_log_index_log_daterecieved.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

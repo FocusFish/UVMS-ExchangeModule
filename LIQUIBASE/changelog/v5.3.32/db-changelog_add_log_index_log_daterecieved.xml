@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+                   logicalFilePath="changelog/v5.2.32/db-changelog_add_log_index_log_daterecieved.xml">
+
+    <changeSet author="johwal" id="Add index on log_daterecieved">
+        <createIndex indexName="log_log_daterecieved_idx"
+                     tableName="log">
+            <column name="log_daterecieved"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
