@@ -4,12 +4,12 @@
     <parent>
         <groupId>fish.focus.uvms.maven</groupId>
         <artifactId>uvms-pom</artifactId>
-        <version>3.19</version>
+        <version>3.24</version>
     </parent>
 
     <groupId>fish.focus.uvms.exchange</groupId>
     <artifactId>exchange</artifactId>
-    <version>5.3.31</version>
+    <version>5.3.32</version>
     <packaging>pom</packaging>
     
     <scm>
@@ -22,7 +22,7 @@
 
         <scm.connection>scm:git:https://github.com/FocusFish/UVMS-ExchangeModule.git</scm.connection>
 
-        <docker.dev.version>4.2.27</docker.dev.version>
+        <docker.dev.version>4.2.37</docker.dev.version>
         <docker.liquibase.changeLogFile>LIQUIBASE/changelog/db-changelog-master.xml</docker.liquibase.changeLogFile>
         <docker.liquibase.db.user>exchange</docker.liquibase.db.user>
         <docker.liquibase.db.passwd>exchange</docker.liquibase.db.passwd>
@@ -31,14 +31,14 @@
         <uvms.commons.version>4.1.15</uvms.commons.version>
         <usm4uvms.version>4.1.12</usm4uvms.version>
         <uvms.config.version>4.1.6</uvms.config.version>
-        <uvms-pom-deps.version>3.19</uvms-pom-deps.version>
+        <uvms-pom-deps.version>3.24</uvms-pom-deps.version>
 
         <!-- Uvms models -->
-        <asset.version>6.8.29</asset.version>
+        <asset.version>6.8.35</asset.version>
         <user.model.version>2.2.6</user.model.version>
         <audit.model.version>4.3.12</audit.model.version>
-        <movement.model.version>5.6.19</movement.model.version>
-        <movement.rules.model.version>2.4.16</movement.rules.model.version>
+        <movement.model.version>5.6.21</movement.model.version>
+        <movement.rules.model.version>2.4.21</movement.rules.model.version>
         <activity.model.version>1.2.18</activity.model.version>
     </properties>
 
