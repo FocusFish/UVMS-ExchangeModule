@@ -22,7 +22,7 @@
 
         <scm.connection>scm:git:https://github.com/FocusFish/UVMS-ExchangeModule.git</scm.connection>
 
-        <docker.dev.version>4.2.38</docker.dev.version>
+        <docker.dev.version>4.2.39</docker.dev.version>
         <docker.liquibase.changeLogFile>LIQUIBASE/changelog/db-changelog-master.xml</docker.liquibase.changeLogFile>
         <docker.liquibase.db.user>exchange</docker.liquibase.db.user>
         <docker.liquibase.db.passwd>exchange</docker.liquibase.db.passwd>
