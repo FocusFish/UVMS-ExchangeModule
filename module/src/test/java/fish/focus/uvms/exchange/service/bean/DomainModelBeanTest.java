@@ -15,11 +15,11 @@ import fish.focus.schema.exchange.service.v1.CapabilityListType;
 import fish.focus.schema.exchange.service.v1.ServiceType;
 import fish.focus.schema.exchange.service.v1.SettingListType;
 import fish.focus.uvms.exchange.service.MockData;
-import fish.focus.uvms.exchange.service.bean.ServiceRegistryModelBean;
 import fish.focus.uvms.exchange.service.dao.ServiceRegistryDaoBean;
 import fish.focus.uvms.exchange.service.entity.serviceregistry.Service;
 import fish.focus.uvms.exchange.service.entity.serviceregistry.ServiceCapability;
 import fish.focus.uvms.exchange.service.entity.serviceregistry.ServiceSetting;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -45,9 +45,16 @@ public class DomainModelBeanTest {
     @InjectMocks
     private ServiceRegistryModelBean model;
 
+    private AutoCloseable openedMocks;
+
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        openedMocks = MockitoAnnotations.openMocks(this);
+    }
+
+    @After
+    public void closeMocks() throws Exception {
+        openedMocks.close();
     }
 
     @Ignore

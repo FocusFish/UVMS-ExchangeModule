@@ -18,7 +18,7 @@ import fish.focus.uvms.exchange.service.MockData;
 import fish.focus.uvms.exchange.service.entity.serviceregistry.Service;
 import fish.focus.uvms.exchange.service.entity.serviceregistry.ServiceCapability;
 import fish.focus.uvms.exchange.service.entity.serviceregistry.ServiceSetting;
-import fish.focus.uvms.exchange.service.mapper.ServiceMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
@@ -31,9 +31,16 @@ import static org.junit.Assert.*;
 
 public class MapperTest {
 
+    private AutoCloseable openedMocks;
+
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        openedMocks = MockitoAnnotations.openMocks(this);
+    }
+
+    @After
+    public void closeMocks() throws Exception {
+        openedMocks.close();
     }
 
     @Test
