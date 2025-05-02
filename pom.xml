@@ -34,7 +34,7 @@
         <uvms-pom-deps.version>3.27</uvms-pom-deps.version>
 
         <!-- Uvms models -->
-        <asset.version>6.8.35</asset.version>
+        <asset.version>6.8.37</asset.version>
         <user.model.version>2.2.6</user.model.version>
         <audit.model.version>4.3.12</audit.model.version>
         <movement.model.version>5.6.21</movement.model.version>
