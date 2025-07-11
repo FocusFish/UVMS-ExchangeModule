@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>exchange-module</artifactId>
+    <name>exchange-module</name>
     <packaging>war</packaging>
 
     <properties>

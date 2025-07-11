@@ -8,6 +8,7 @@
     </parent>
 
     <artifactId>liquibase</artifactId>
+    <name>liquibase</name>
     <packaging>pom</packaging>
 
     <profiles>
@@ -87,7 +88,7 @@
 			<properties>
 				<db.docker.url>offline:postgresql?changeLogFile=target/databasechangelog.csv&amp;outputLiquibaseSql=true</db.docker.url>
 			</properties>
-		</profile>                       
+		</profile>
     </profiles>
 
     <build>

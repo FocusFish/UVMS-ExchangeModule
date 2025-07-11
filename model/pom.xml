@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>exchange-model</artifactId>
+    <name>exchange-model</name>
     <packaging>ejb</packaging>
 
     <properties>
