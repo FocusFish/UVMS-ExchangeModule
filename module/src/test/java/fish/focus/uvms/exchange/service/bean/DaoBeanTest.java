@@ -13,6 +13,7 @@ package fish.focus.uvms.exchange.service.bean;
 
 import fish.focus.uvms.exchange.service.dao.ServiceRegistryDaoBean;
 import fish.focus.uvms.exchange.service.entity.serviceregistry.Service;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,9 +40,16 @@ public class DaoBeanTest {
     @InjectMocks
     private ServiceRegistryDaoBean dao;
 
+    private AutoCloseable openedMocks;
+
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        openedMocks = MockitoAnnotations.openMocks(this);
+    }
+
+    @After
+    public void closeMocks() throws Exception {
+        openedMocks.close();
     }
 
     @Test

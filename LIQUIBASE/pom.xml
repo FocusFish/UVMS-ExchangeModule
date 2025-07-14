@@ -4,10 +4,11 @@
     <parent>
         <groupId>fish.focus.uvms.exchange</groupId>
         <artifactId>exchange</artifactId>
-        <version>5.3.32</version>
+        <version>5.4.0</version>
     </parent>
 
     <artifactId>liquibase</artifactId>
+    <name>liquibase</name>
     <packaging>pom</packaging>
 
     <profiles>
@@ -26,7 +27,7 @@
                 <db.outputFile>changelog/generatedChangelog.xml</db.outputFile>
                 <driver.groupId>org.postgresql</driver.groupId>
                 <driver.artifactId>postgresql</driver.artifactId>
-                <driver.version>42.7.4</driver.version>
+                <driver.version>42.7.7</driver.version>
             </properties>
             <dependencies>
 		        <dependency>
@@ -43,7 +44,7 @@
 					<plugin>
 						<groupId>org.liquibase</groupId>
 						<artifactId>liquibase-maven-plugin</artifactId>
-						<version>4.29.1</version>
+						<version>4.33.0</version>
 						<configuration>
 							<url>${db.docker.url}</url>
 							<migrationSqlOutputFile>${project.build.directory}/full-update.sql</migrationSqlOutputFile>
@@ -63,7 +64,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>3.6.0</version>
+						<version>3.6.1</version>
 						<executions>
 							<execution>
 								<id>attach-artifacts</id>
@@ -87,7 +88,7 @@
 			<properties>
 				<db.docker.url>offline:postgresql?changeLogFile=target/databasechangelog.csv&amp;outputLiquibaseSql=true</db.docker.url>
 			</properties>
-		</profile>                       
+		</profile>
     </profiles>
 
     <build>
@@ -96,7 +97,7 @@
                 <plugin>
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>4.29.1</version>
+                    <version>4.33.0</version>
                     <configuration>
                         <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                         <changeLogFile>${db.changeLogFile}</changeLogFile>
@@ -142,7 +143,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.3</version>
+                    <version>3.1.4</version>
                     <goals>
                         <goal>deploy-file</goal>
                     </goals>

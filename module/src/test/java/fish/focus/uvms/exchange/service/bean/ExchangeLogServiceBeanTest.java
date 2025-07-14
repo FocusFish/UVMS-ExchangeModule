@@ -1,24 +1,23 @@
 package fish.focus.uvms.exchange.service.bean;
 
 import fish.focus.schema.exchange.v1.ExchangeLogStatusTypeType;
-import fish.focus.uvms.exchange.service.bean.ExchangeLogModelBean;
-import fish.focus.uvms.exchange.service.bean.ExchangeLogServiceBean;
 import fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLog;
 import fish.focus.uvms.exchange.service.entity.exchangelog.ExchangeLogStatus;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.enterprise.event.Event;
 import java.util.UUID;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
@@ -31,9 +30,6 @@ public class ExchangeLogServiceBeanTest {
 
     @Mock
     private ExchangeLogModelBean exchangeLogModel;
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void updateStatusByLogGuidWhenSuccess() {
@@ -62,15 +58,15 @@ public class ExchangeLogServiceBeanTest {
 
     @Test
     public void updateStatusByLogGuidWhenFailure() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage("noooooooooooooooooooo!!!");
-
-        UUID id = UUID.randomUUID();
+        String id = UUID.randomUUID().toString();
+        String expectedExceptionMessage = "noooooooooooooooooooo!!!";
 
         //mock
-        doThrow(new RuntimeException("noooooooooooooooooooo!!!")).when(exchangeLogModel).updateExchangeLogStatus(isA(ExchangeLogStatus.class), eq("SYSTEM"), isA(UUID.class));
+        doThrow(new RuntimeException(expectedExceptionMessage))
+                .when(exchangeLogModel)
+                .updateExchangeLogStatus(isA(ExchangeLogStatus.class), eq("SYSTEM"), isA(UUID.class));
 
-        exchangeLogService.updateStatus(id.toString(), ExchangeLogStatusTypeType.FAILED, "SYSTEM");
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> exchangeLogService.updateStatus(id, ExchangeLogStatusTypeType.FAILED, "SYSTEM"));
+        assertThat(exception.getMessage(), is(equalTo(expectedExceptionMessage)));
     }
-
 }
