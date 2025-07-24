@@ -39,7 +39,7 @@
         <user.model.version>2.3.0</user.model.version>
         <audit.model.version>4.4.0</audit.model.version>
         <movement.model.version>5.8.0</movement.model.version>
-        <movement.rules.model.version>2.4.22</movement.rules.model.version>
+        <movement.rules.model.version>2.5.0</movement.rules.model.version>
         <activity.model.version>1.3.1</activity.model.version>
     </properties>
 
