@@ -142,6 +142,7 @@
             <xsd:enumeration value="OTHER"/>
             <xsd:enumeration value="NAF"/>
             <xsd:enumeration value="FLUX"/>
+            <xsd:enumeration value="VMS"/>
         </xsd:restriction>
     </xsd:simpleType>
     
