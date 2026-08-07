@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class ExchangeRestClient {
 
     private WebTarget webTarget;
-    
+
     @Resource(name = "java:global/exchange_endpoint")
     private String exchangeEndpoint;
 
@@ -45,50 +46,44 @@ public class ExchangeRestClient {
         webTarget = client.target(url);
     }
 
-
-
     public GetServiceListResponse getServiceList(GetServiceListRequest request) {
-
         Response response = webTarget
                 .path("serviceList")
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, internalRestTokenHandler.createAndFetchToken("user"))
                 .post(Entity.json(request), Response.class);
 
-        if(response.getStatus() != 200) {
+        if (response.getStatus() != 200) {
             throw new RuntimeException("Errormessage from exchange: " + response.readEntity(String.class));
         }
         return response.readEntity(GetServiceListResponse.class);
     }
 
     public void sendEmail(EmailType email) {
-
         Response response = webTarget
                 .path("sendEmail")
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, internalRestTokenHandler.createAndFetchToken("user"))
                 .post(Entity.json(email));
 
-        if(response.getStatus() != 200) {
+        if (response.getStatus() != 200) {
             throw new RuntimeException("Errormessage from exchange: " + response.readEntity(String.class));
         }
     }
 
     public void sendCommandToPlugin(SetCommandRequest request) {
-
         Response response = webTarget
                 .path("pluginCommand")
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, internalRestTokenHandler.createAndFetchToken("user"))
                 .post(Entity.json(request));
 
-        if(response.getStatus() != 200) {
+        if (response.getStatus() != 200) {
             throw new RuntimeException("Errormessage from exchange: " + response.readEntity(String.class));
         }
     }
 
     public ExchangeLogStatusType getPollStatus(String uuid) {
-
         Response response = webTarget
                 .path("poll")
                 .path(uuid)
@@ -96,14 +91,14 @@ public class ExchangeRestClient {
                 .header(HttpHeaders.AUTHORIZATION, internalRestTokenHandler.createAndFetchToken("user"))
                 .get(Response.class);
 
-        if(response.getStatus() != 200) {
+        if (response.getStatus() != 200) {
             throw new RuntimeException("Errormessage from exchange: " + response.readEntity(String.class));
         }
-        if(response.getLength() <= 0){
+
+        try {
+            return response.readEntity(ExchangeLogStatusType.class);
+        } catch (ProcessingException e) {
             return null;
         }
-        return response.readEntity(ExchangeLogStatusType.class);
     }
-
-
 }
