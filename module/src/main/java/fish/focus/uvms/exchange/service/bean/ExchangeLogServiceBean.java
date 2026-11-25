@@ -11,15 +11,9 @@ copy of the GNU General Public License along with the IFDM Suite. If not, see <h
  */
 package fish.focus.uvms.exchange.service.bean;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
-import java.time.Instant;
-import java.util.*;
-
 import fish.focus.schema.exchange.module.v1.ExchangeBaseRequest;
 import fish.focus.schema.exchange.movement.v1.MovementRefType;
+import fish.focus.schema.exchange.plugin.v1.ExchangePluginMethod;
 import fish.focus.schema.exchange.v1.*;
 import fish.focus.uvms.exchange.service.dao.ExchangeLogDaoBean;
 import fish.focus.uvms.exchange.service.dao.UnsentMessageDaoBean;
@@ -33,6 +27,13 @@ import fish.focus.uvms.exchange.service.message.producer.bean.ExchangeEventProdu
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.NoResultException;
+import java.time.Instant;
+import java.util.*;
 
 @Stateless
 public class ExchangeLogServiceBean {
@@ -60,19 +61,20 @@ public class ExchangeLogServiceBean {
 
     /**
      * Create a new log entry.
-     * @param request the incoming exchange request
-     * @param logType the type of the log
-     * @param status the status of the message (does it needs to be validated, is it valid, ...)
+     *
+     * @param request     the incoming exchange request
+     * @param logType     the type of the log
+     * @param status      the status of the message (does it needs to be validated, is it valid, ...)
      * @param messageType the type of the message
      * @param messageText XML representation of the incoming/outgoing message
-     * @param incoming is this an incoming message (then true) or an outgoing message (then false)?
+     * @param incoming    is this an incoming message (then true) or an outgoing message (then false)?
      * @return the created log entry
      */
     public ExchangeLog log(ExchangeBaseRequest request, LogType logType, ExchangeLogStatusTypeType status, TypeRefType messageType, String messageText, boolean incoming) {
         ExchangeLog log = new ExchangeLog();
         log.setTypeRefType(messageType);
         log.setTypeRefMessage(messageText);
-        log.setTypeRefGuid( (request.getMessageGuid() == null || request.getMessageGuid().isEmpty()) ? null : UUID.fromString(request.getMessageGuid()));
+        log.setTypeRefGuid((request.getMessageGuid() == null || request.getMessageGuid().isEmpty()) ? null : UUID.fromString(request.getMessageGuid()));
 
         log.setSenderReceiver(request.getSenderOrReceiver());
         log.setDateReceived(request.getDate().toInstant());
@@ -121,11 +123,11 @@ public class ExchangeLogServiceBean {
 
     /**
      * Adds a new log status to a log with the specified log guid.
-     *
+     * <p>
      * Since the guid is not something that an end user will have to, this method is assumed to be used by the system.
      * Therefore, the logged username will be "SYSTEM".
      *
-     * @param logGuid guid of the log. Notice that this is NOT the internal id.
+     * @param logGuid   guid of the log. Notice that this is NOT the internal id.
      * @param logStatus the next status
      * @return the updated log
      * @when something goes wrong
@@ -137,7 +139,7 @@ public class ExchangeLogServiceBean {
 
 
     public List<ExchangeLogStatusType> getExchangeStatusHistoryList(ExchangeLogStatusTypeType status, TypeRefType type, Instant from, Instant to) {
-        LOG.info("Get pollstatus list in service layer:{}",status);
+        LOG.info("Get pollstatus list in service layer:{}", status);
         List<ExchangeLogStatusTypeType> statusList = new ArrayList<>();
         if (status != null) {
             statusList.add(status);
@@ -159,11 +161,11 @@ public class ExchangeLogServiceBean {
             logStatusHistoryList.add(statusType);
         }
 
-        return  logStatusHistoryList;
+        return logStatusHistoryList;
     }
 
     public String createUnsentMessage(String senderReceiver, Instant timestamp, String recipient, String message, List<UnsentMessageProperty> properties, String username, String function) {
-        LOG.debug("[INFO] CreateUnsentMessage in service layer:{}",message);
+        LOG.debug("[INFO] CreateUnsentMessage in service layer:{}", message);
         UnsentMessage unsentMessage = new UnsentMessage();
         unsentMessage.setDateReceived(timestamp);
         unsentMessage.setSenderReceiver(senderReceiver);
@@ -174,43 +176,45 @@ public class ExchangeLogServiceBean {
         unsentMessage.setProperties(new ArrayList<>());
         unsentMessage.getProperties().addAll(properties);
 
-        properties.forEach( p -> p.setUnsentMessage(unsentMessage));
+        properties.forEach(p -> p.setUnsentMessage(unsentMessage));
 
         unsentMessage.setFunction(function);
 
         return unsentMessageDao.create(unsentMessage).getGuid().toString();
     }
 
-    public void removeUnsentMessage(String unsentMessageId) {
+    public void removeUnsentMessage(String unsentMessageId, String serviceClassName, ExchangePluginMethod method) {
         LOG.trace("removeUnsentMessage in service layer:{}", unsentMessageId);
         if (unsentMessageId == null) {
             throw new IllegalArgumentException("No message to remove");
         }
 
         UnsentMessage entity = unsentMessageDao.getByGuid(UUID.fromString(unsentMessageId));
-        if (entity != null) {
-            unsentMessageDao.remove(entity);
-        } else {
-            LOG.error("No message with id {} to remove", unsentMessageId);
+        if (entity == null) {
+            LOG.error("No message with id {} to remove coming from {} ({})", unsentMessageId, serviceClassName, method);
+            return;
         }
+
+        unsentMessageDao.remove(entity);
     }
 
-    public void acknowledgeUnsentMessage(String unsentMessageId) {
-        LOG.trace("removeUnsentMessage in service layer:{}", unsentMessageId);
+    public void acknowledgeUnsentMessage(String unsentMessageId, String serviceClassName, ExchangePluginMethod method) {
+        LOG.trace("acknowledgeUnsentMessage in service layer:{}", unsentMessageId);
         if (unsentMessageId == null) {
             throw new IllegalArgumentException("No message acknowledge");
         }
 
         UnsentMessage entity = unsentMessageDao.getByGuid(UUID.fromString(unsentMessageId));
-        if (entity != null) {
-            entity.setAcknowledged(true);
-            unsentMessageDao.update(entity);
-        } else {
-            LOG.error("No message with id {} to acknowledge", unsentMessageId);
+        if (entity == null) {
+            LOG.error("No message with id {} to acknowledge coming from {} ({})", unsentMessageId, serviceClassName, method);
+            return;
         }
+
+        entity.setAcknowledged(true);
+        unsentMessageDao.update(entity);
     }
 
-    public void updateTypeRef(ExchangeLog exchangeLogStatus, MovementRefType movementRefType){
+    public void updateTypeRef(ExchangeLog exchangeLogStatus, MovementRefType movementRefType) {
         exchangeLogStatus.setTypeRefType(TypeRefType.valueOf(movementRefType.getType().value()));
         if (movementRefType.getMovementRefGuid() != null) {
             exchangeLogStatus.setTypeRefGuid(UUID.fromString(movementRefType.getMovementRefGuid()));
@@ -222,14 +226,14 @@ public class ExchangeLogServiceBean {
     }
 
     public void resend(List<String> messageIdList, String username) {
-        LOG.debug("resend in service layer:{} {}",messageIdList,username);
+        LOG.debug("resend in service layer:{} {}", messageIdList, username);
         List<UnsentMessage> unsentMessageList = getAndRemoveUnsentMessagesFromDB(messageIdList);
         if (!unsentMessageList.isEmpty()) {
             for (UnsentMessage unsentMessage : unsentMessageList) {
                 try {
                     exchangeEventProducer.sendExchangeEventMessage(unsentMessage.getMessage(), unsentMessage.getFunction());
                 } catch (Exception e) {
-                    LOG.error("Error when sending/receiving message {} {}",messageIdList, e);
+                    LOG.error("Error when sending/receiving message {} {}", messageIdList, e);
                 }
             }
         }

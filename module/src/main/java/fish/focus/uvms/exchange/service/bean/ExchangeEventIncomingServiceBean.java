@@ -37,7 +37,10 @@ import fish.focus.uvms.exchange.service.message.event.ErrorEvent;
 import fish.focus.uvms.exchange.service.message.event.PluginErrorEvent;
 import fish.focus.uvms.exchange.service.message.event.carrier.ExchangeErrorEvent;
 import fish.focus.uvms.exchange.service.message.event.carrier.PluginErrorEventCarrier;
-import fish.focus.uvms.exchange.service.message.producer.bean.*;
+import fish.focus.uvms.exchange.service.message.producer.bean.ExchangeActivityProducer;
+import fish.focus.uvms.exchange.service.message.producer.bean.ExchangeAssetProducer;
+import fish.focus.uvms.exchange.service.message.producer.bean.ExchangeMovementProducer;
+import fish.focus.uvms.exchange.service.message.producer.bean.ExchangeSalesProducer;
 import fish.focus.uvms.exchange.service.model.IncomingMovement;
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
@@ -491,14 +494,13 @@ public class ExchangeEventIncomingServiceBean {
     }
 
     private void handleUpdateExchangeLogAcknowledge(ExchangePluginMethod method, String serviceClassName, AcknowledgeType ack) {
-
         ExchangeLogStatusTypeType logStatus = ExchangeLogStatusTypeType.FAILED;
         if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.OK) {//TODO if(poll probably transmitted)
             logStatus = ExchangeLogStatusTypeType.SUCCESSFUL;
-            exchangeLogService.removeUnsentMessage(ack.getUnsentMessageGuid());
+            exchangeLogService.removeUnsentMessage(ack.getUnsentMessageGuid(), serviceClassName, method);
         } else if (ack.getType() == fish.focus.schema.exchange.common.v1.AcknowledgeTypeType.NOK) {
             LOG.debug("{} was NOK: {}", method, ack.getMessage());
-            exchangeLogService.acknowledgeUnsentMessage(ack.getUnsentMessageGuid());
+            exchangeLogService.acknowledgeUnsentMessage(ack.getUnsentMessageGuid(), serviceClassName, method);
         }
 
         if (ack.getMessage() != null) {
@@ -511,7 +513,7 @@ public class ExchangeEventIncomingServiceBean {
     private void handleSetPollStatusAcknowledge(ExchangePluginMethod method, String serviceClassName, AcknowledgeType ack) {
         LOG.debug("{} was acknowledged in {}", method, serviceClassName);
         ExchangeLogStatusTypeType exchangeLogStatus = ack.getPollStatus().getStatus();
-        exchangeLogService.removeUnsentMessage(ack.getUnsentMessageGuid());
+        exchangeLogService.removeUnsentMessage(ack.getUnsentMessageGuid(), serviceClassName, method);
         exchangeLogService.setPollStatus(UUID.fromString(ack.getPollStatus().getPollId()), exchangeLogStatus, serviceClassName, ack.getMessage());
     }
 
